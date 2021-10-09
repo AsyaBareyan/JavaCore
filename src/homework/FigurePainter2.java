@@ -6,7 +6,7 @@ public class FigurePainter2 {
             for (int j = i + 1; j < 4; j++) {
                 System.out.print(" ");
             }for (int k = 4-i; k < 4; k++) {
-                System.out.print("*");
+                System.out.print("* ");
         }
             System.out.println("*");
 

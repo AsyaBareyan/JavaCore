@@ -12,14 +12,14 @@ public class FigurePainter5 {
             System.out.println("*");
         }
 
-            for (int a = 0; a < 4; a++) {
-                for (int b = 4 - a; b < 4; b++) {
+            for (int a = 0; a < 3; a++) {
+                for (int b = 3 - a; b < 3; b++) {
                     System.out.print(" ");
                 }
-                for (int c = a + 1; c < 4; c++) {
-                    System.out.print("* ");
+                for (int c = a + 1; c < 3; c++) {
+                    System.out.print(" *");
                 }
-                System.out.println("*");
+                System.out.println(" *");
 
             }
 

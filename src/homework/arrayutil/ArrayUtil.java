@@ -1,11 +1,11 @@
-package arrayutil;
+package homework.arrayutil;
 
 public class ArrayUtil {
     public static void main(String[] args) {
 //Տպել մասիվի բոլոր էլեմենտները
         int[] array = {7, 11, 999, 17, 92, 20, -4, 88, 14, 5};
         for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i]);
+            System.out.print(array[i] + " ");
         }
     }
 }
@@ -105,4 +105,5 @@ public class ArrayUtil {
 //    }
 //
 //}
+
 

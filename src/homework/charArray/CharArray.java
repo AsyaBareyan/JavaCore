@@ -49,26 +49,20 @@ public class CharArray {
         System.out.println();
     }
 
-    void charBarev(char[] chars, char f) {
+    char[] trim(char[] chars) {
         int startIndex = 0;
         int endIndex = chars.length - 1;
-        while (startIndex < endIndex && chars[startIndex] == f) {
+        while (startIndex < endIndex && chars[startIndex] == ' ') {
             startIndex++;
         }
-        while (startIndex < endIndex && chars[endIndex] == f) {
+        while (startIndex < endIndex && chars[endIndex] == ' ') {
             endIndex--;
         }
-        char[] resalt = new char[(endIndex - startIndex) + 1];
+        char[] result = new char[(endIndex - startIndex) + 1];
         int index = 0;
         for (int i = startIndex; i <= endIndex; i++) {
-            resalt[index++] = chars[i];
-
+            result[index++] = chars[i];
         }
-        for (int i = 0; i < resalt.length; i++) {
-            System.out.print(resalt[i]);
-
-
-        }
-        //return resalt[i];  }
+   return result;
     }
 }

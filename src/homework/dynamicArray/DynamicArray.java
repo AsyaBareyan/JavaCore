@@ -37,12 +37,11 @@ public class DynamicArray {
 
     //tpel masivi avelacvac elementnery
     public void print() {
-        int[] result = new int[array.length + 10];
-        int a=0;
-        for (int i : result) {
-            result[a++]=array[i];
-            System.out.println(i);
+
+        int n=array.length-size;
+        for (int i = 0; i < array.length-n; i++) {
+
+        System.out.println(array[i]);
         }
 //es uxutyamb mtacum em )))
-    }
-}
+    }}

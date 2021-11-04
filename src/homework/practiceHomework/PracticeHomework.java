@@ -10,13 +10,14 @@ public class PracticeHomework {
     }
 
     int nextNumber(int number) {
-        return number + 1;
+        return ++number;
     }
 
     boolean isSameName(int a, int b) {
         if (a == b) {
             return true;
-        } else return false;
+        }
+        return false;
     }
 
     boolean lessThanOrEqualToZero(int number) {
@@ -32,12 +33,7 @@ public class PracticeHomework {
     }
 
     int maxLenght(int[] array1, int[] array2) {
-        int maxLenght = array1.length;
-        if (array2.length > array1.length) {
-            maxLenght = array2.length;
+        return array1.length > array2.length ? array1.length : array2.length;
 
-
-        }
-        return maxLenght;
     }
 }

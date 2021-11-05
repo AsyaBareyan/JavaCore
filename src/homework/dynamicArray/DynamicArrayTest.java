@@ -6,14 +6,16 @@ public class DynamicArrayTest {
         da.add(8);
         da.add(7);
         da.add(6);
-//        da.add(10);
-//        da.add(1);
-//        da.add(55);
-//        da.add(20);
-//        da.add(18);
-//        da.add(81);
-//        da.add(80);
-        System.out.println(da.getByIndex(21));
+        da.add(10);
+        da.add(1);
+        da.add(55);
+        da.add(20);
+        da.add(18);
+        da.add(81);
+        da.add(80);
+        da.add(85);
+        da.add(77);
+        System.out.println(da.getByIndexx(100));
         da.print();
 
 

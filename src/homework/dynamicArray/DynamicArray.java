@@ -11,19 +11,51 @@ public class DynamicArray {
 
         if (size >= array.length) {
             extend();
-            array[size++] = value;
-        } else array[size++] = value;
+        }
+        array[size++] = value;
 
     }
 
-    //1.stexcel hin masivic 10 element aveli mec masiv
-    //2.qcel hin masivi elementnery nori mej
-    //3.hin masivi hxumy kapel nor masivi hxman het
+    public void add(int[] numbers) {
+//        for (int i = 0; i < array.length; i++) {
+//            add(numbers[i]);
+        for (int number : numbers) {
+            add(number);
+
+        }
+
+    }
+
+    public void add(int value, int index) {
+        if (index < 0 || index > size) {
+            System.out.println("invalid index: ");
+        } else {
+            if (array.length == size) {
+                extend();
+            }
+            for (int i = size; i >= index; i--) {
+                array[i + 1] = array[i];
+            }
+            array[index] = value;
+            size++;
+
+
+        }
+    }
+
+    public void set(int value, int index) {
+        if (index < 0 || index > size) {
+            System.out.println("invalid index: " + index);
+        } else
+            array[index] = value;
+
+    }
+
+
     private void extend() {
         int[] result = new int[array.length + 10];
-        int a = 0;
         for (int i = 0; i < array.length; i++) {
-            result[a++] = array[i];
+            result[i] = array[i];
         }
         array = result;
     }
@@ -32,18 +64,53 @@ public class DynamicArray {
     //ete trvac indexy mer unecac masivi indexi sahmannerum e, veradarcnel masivi index-erord elementy,
     // hakarak depqum verad -1
     public int getByIndexx(int index) {
-        if (index <= array.length) {
-            return array[index];
-        } else return -1;
+        if (index < 0 || index > size) {
+            System.err.println("invalid index:" + index);
+            return -1;
+        }
+        return array[index];
     }
 
     //tpel masivi avelacvac elementnery
     public void print() {
 
-        int n = array.length - size;
-        for (int i = 0; i < array.length - n; i++) {
+        //  int n = array.length - size;
+        for (int i = 0; i < size; i++) {
 
-            System.out.println(array[i]);
+            System.out.print(array[i] + " ");
+        }
+        System.out.println();
+    }
+
+    void delete(int index) {
+        if (index < 0 || index > size) {
+            System.err.println("invalid index: " + index);
+        } else {
+            for (int i = index + 1; i < size; i++) {
+                array[i - 1] = array[i];
+
+                size--;
+            }
+
+
         }
     }
+
+    public boolean isExists(int value) {
+        for (int i = 0; i < size; i++) {
+            if (array[i] == value) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    public boolean isEmpty() {
+        if (size == 0) {
+            return true;
+        } else return false;
+    }
 }
+
+

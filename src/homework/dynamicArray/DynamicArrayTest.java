@@ -3,20 +3,19 @@ package homework.dynamicArray;
 public class DynamicArrayTest {
     public static void main(String[] args) {
         DynamicArray da = new DynamicArray();
-        da.add(8);
-        da.add(7);
-        da.add(6);
-        da.add(10);
-        da.add(1);
-        da.add(55);
-        da.add(20);
-        da.add(18);
-        da.add(81);
-        da.add(80);
-        da.add(85);
-        da.add(77);
-        System.out.println(da.getByIndexx(100));
+//        for (int i = 0; i < 10; i++) {
+//            da.add(i+1);
+//
+//        }
+        System.out.println(da.isEmpty());
+
+        da.delete(4);
+        int[] numbers={33,44,55};
+        da.add(numbers);
+        System.out.println(da.isEmpty());
         da.print();
+        da.add(66,2);
+        System.out.println(da.isExists(55));
 
 
     }

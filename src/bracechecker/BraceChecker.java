@@ -34,23 +34,23 @@ public class BraceChecker {
                     if (!stack.isEmpty()) {
                         char a = (char) stack.pop();
                         if ((a != '(')) {
-                            System.err.println("error: opened" + a + "but close" + c + "at line" + i);
+                            System.err.println("error: opened " + a + " but closed " + c + " at line " + i);
                         }
-                    }else System.err.println("Stack is empty");
+                    } else System.err.println("Stack is empty");
                     break;
                 case ']':
                     if (!stack.isEmpty()) {
                         char b = (char) stack.pop();
                         if ((b != '[')) {
-                            System.err.println("error opened" + b + "but close" + c + "at line" + i);
+                            System.err.println("error: opened " + b  + " but closed " + c + " at line " + i);
                         }
-                    }else System.err.println("Stack is empty");
+                    } else System.err.println("Stack is empty");
                     break;
                 case '}':
                     if (!stack.isEmpty()) {
                         char d = (char) stack.pop();
                         if ((d != '{')) {
-                            System.err.println("error opened" + d + "but closed" + c + "at line" + i);
+                            System.err.println("error: opened " + d + "but closed " + c + " at line " + i);
                         }
                     } else System.err.println("Stack is empty");
                     break;

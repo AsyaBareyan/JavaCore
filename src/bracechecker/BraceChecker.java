@@ -15,52 +15,51 @@ public class BraceChecker {
     public void check() {
         // char[] chars = text.toCharArray();
         Stack stack = new Stack();
+        boolean isValid = true;
         for (int i = 0; i < text.length(); i++) {
-            // for (int j = text.length()-1; j >0 ; j--) {
             char c = text.charAt(i);
-            //char ch=text.charAt(text.length()-1-i);
 
             switch (c) {
                 case '(':
-                    stack.push('(');
-                    break;
                 case '[':
-                    stack.push('[');
-                    break;
                 case '{':
-                    stack.push('{');
+                    stack.push(c);
                     break;
                 case ')':
-                    if (!stack.isEmpty()) {
-                        char a = (char) stack.pop();
-                        if ((a != '(')) {
-                            System.err.println("error: opened " + a + " but closed " + c + " at line " + i);
-                        }
-                    } else System.err.println("Stack is empty");
+                    char a = (char) stack.pop();
+                    if (stack.isEmpty()) {
+                        isValid = false;
+                        System.err.println("Stack is empty");
+                    } else if ((a != '(')) {
+                        isValid = false;
+                        System.err.println("error: opened " + a + " but closed " + c + " at line " + i);
+                    }
                     break;
                 case ']':
-                    if (!stack.isEmpty()) {
-                        char b = (char) stack.pop();
-                        if ((b != '[')) {
-                            System.err.println("error: opened " + b  + " but closed " + c + " at line " + i);
-                        }
-                    } else System.err.println("Stack is empty");
+                    char b = (char) stack.pop();
+                    if (stack.isEmpty()) {
+                        isValid = false;
+                        System.err.println("Stack is empty");
+                    } else if ((b != '[')) {
+                        isValid = false;
+                        System.err.println("error: opened " + b + " but closed " + c + " at line " + i);
+                    }
                     break;
                 case '}':
-                    if (!stack.isEmpty()) {
-                        char d = (char) stack.pop();
-                        if ((d != '{')) {
-                            System.err.println("error: opened " + d + "but closed " + c + " at line " + i);
-                        }
-                    } else System.err.println("Stack is empty");
-                    break;
-                default:
+                    char d = (char) stack.pop();
+                    if (stack.isEmpty()) {
+                        isValid = false;
+                        System.err.println("Stack is empty");
+                    } else if ((d != '{')) {
+                        isValid = false;
+                        System.err.println("error: opened " + d + "but closed " + c + " at line " + i);
+                    }
                     break;
             }
         }
-        if (!stack.isEmpty()) {
-            System.out.println("error: not found closed checker");
-        } else System.out.println("ok");
+        if (!stack.isEmpty() && isValid==false) {
+            System.err.println("error: not found closed checker");
+        } else if (isValid){System.out.println("ok");}
 
     }
 }

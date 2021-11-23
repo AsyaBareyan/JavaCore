@@ -18,7 +18,6 @@ public class Stack {
 
     public int pop() {
         if (size < 0) {
-            System.out.println("Stack is empty");
             return 0;
         } else {
             return array[size--];

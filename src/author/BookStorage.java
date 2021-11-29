@@ -34,6 +34,16 @@ public class BookStorage {
 
     }
 
+    public Book getBySerialId(String serialId) {
+        for (int i = 0; i < size; i++) {
+            if (books[i].getSerialId().equals(serialId)) {
+                return books[i];
+            }
+
+        }
+        return null;
+    }
+
     public void searchByTitle(String keyword) {
         for (int i = 0; i < size; i++) {
             if (books[i].getTitle().contains(keyword)) {
@@ -42,36 +52,57 @@ public class BookStorage {
         }
     }
 
-    public void searchBooksByAuthor(String email) {
+    public void searchBooksByAuthor(Author author) {
         for (int i = 0; i < size; i++) {
-            if (books[i].getAuthor().getEmail().equals(email)) {
+            if (books[i].getAuthor().equals(author)) {
                 System.out.println(books[i]);
-                ;
             }
         }
     }
 
-    public void countBooksByAuthor(String email) {
+    public void countBooksByAuthor(Author author) {
         int count = 0;
         for (int i = 0; i < size; i++) {
-            if (books[i].getAuthor().getEmail().equals(email)) {
+            if (books[i].getAuthor().equals(author)) {
                 count++;
             }
 
         }
-        System.out.println(count);
+        System.out.println("count of " + author.getEmail() + "author's book is " + count);
     }
 
-    public void changeBookAuthor(String email) {
-
-    }
 
     public Book getByTitle(String title) {
         for (int i = 0; i < size; i++) {
             if (books[i].getTitle().equals(title)) {
-                System.out.println(books[i]);
+                return books[i];
             }
         }
         return null;
+    }
+
+    public void deleteByAuthor(Author author) {
+        for (int i = 0; i < size; i++) {
+            if (books[i].getAuthor().equals(author)) {
+                deleteByIndex(i);
+            }
+        }
+    }
+
+    public void deleteBook(Book book) {
+        for (int i = 0; i < size; i++) {
+            if (books[i].equals(books)) {
+                deleteByIndex(i);
+                break;
+            }
+        }
+    }
+
+    private void deleteByIndex(int index) {
+        for (int i = index + 1; i < size; i++) {
+            books[i - 1] = books[i];
+
+        }
+        size--;
     }
 }

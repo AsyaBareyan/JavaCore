@@ -1,4 +1,8 @@
-package author;
+package author.storage;
+
+import author.model.Author;
+import author.model.Book;
+import author.util.ArrayUtil;
 
 public class BookStorage {
     private Book[] books = new Book[10];
@@ -84,7 +88,8 @@ public class BookStorage {
     public void deleteByAuthor(Author author) {
         for (int i = 0; i < size; i++) {
             if (books[i].getAuthor().equals(author)) {
-                deleteByIndex(i);
+                ArrayUtil.deleteByIndex(books,i,size);
+                size--;
             }
         }
     }
@@ -92,17 +97,11 @@ public class BookStorage {
     public void deleteBook(Book book) {
         for (int i = 0; i < size; i++) {
             if (books[i].equals(books)) {
-                deleteByIndex(i);
+                ArrayUtil.deleteByIndex(books,i,size);
+               size--;
                 break;
             }
         }
     }
 
-    private void deleteByIndex(int index) {
-        for (int i = index + 1; i < size; i++) {
-            books[i - 1] = books[i];
-
-        }
-        size--;
-    }
 }

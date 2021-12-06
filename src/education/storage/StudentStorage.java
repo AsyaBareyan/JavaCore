@@ -1,4 +1,7 @@
-package education;
+package education.storage;
+
+import education.model.Lesson;
+import education.model.Student;
 
 public class StudentStorage {
     private Student[] students = new Student[10];
@@ -15,6 +18,7 @@ public class StudentStorage {
         Student[] result = new Student[students.length + 10];
         System.arraycopy(students, 0, result, 0, size);
         students = result;
+
     }
 
     public void print() {
@@ -35,10 +39,11 @@ public class StudentStorage {
 
     public void printStudentsByLesson(Lesson lesson) {
         for (int i = 0; i < size; i++) {
-            if (students[i].getLesson().equals(lesson)) {
-                System.out.println(students[i]);
+            for (Lesson lesson1 : students[i].getLessons()) {
+                if (lesson.equals(lesson1)) {
+                    System.out.println(students[i]);
+                }
             }
-
         }
     }
 

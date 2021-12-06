@@ -1,9 +1,9 @@
-package education;
+package education.model;
 
 import java.util.Objects;
 
 public class Lesson {
-    private String lessonname;
+    private String lessonName;
     private double duration;
     private String lecturerName;
     private double price;
@@ -13,18 +13,18 @@ public class Lesson {
     }
 
     public Lesson(String lessonname, double duration, String lecturerName, double price) {
-        this.lessonname = lessonname;
+        this.lessonName = lessonname;
         this.duration = duration;
         this.lecturerName = lecturerName;
         this.price = price;
     }
 
     public String getName() {
-        return lessonname;
+        return lessonName;
     }
 
     public void setName(String name) {
-        this.lessonname = name;
+        this.lessonName = name;
     }
 
     public double getDuration() {
@@ -56,18 +56,18 @@ public class Lesson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lesson lesson = (Lesson) o;
-        return Double.compare(lesson.duration, duration) == 0 && Double.compare(lesson.price, price) == 0 && Objects.equals(lessonname, lesson.lessonname) && Objects.equals(lecturerName, lesson.lecturerName);
+        return Double.compare(lesson.duration, duration) == 0 && Double.compare(lesson.price, price) == 0 && Objects.equals(lessonName, lesson.lessonName) && Objects.equals(lecturerName, lesson.lecturerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(lessonname, duration, lecturerName, price);
+        return Objects.hash(lessonName, duration, lecturerName, price);
     }
 
     @Override
     public String toString() {
         return "Lesson{" +
-                "name='" + lessonname + '\'' +
+                "name='" + lessonName + '\'' +
                 ", duration=" + duration +
                 ", lecturerName='" + lecturerName + '\'' +
                 ", price=" + price +

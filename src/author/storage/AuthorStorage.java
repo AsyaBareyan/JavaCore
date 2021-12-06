@@ -1,4 +1,7 @@
-package author;
+package author.storage;
+
+import author.model.Author;
+import author.util.ArrayUtil;
 
 public class AuthorStorage {
     private Author[] authors = new Author[10];
@@ -64,17 +67,11 @@ public class AuthorStorage {
     public void deleteAuthor(Author author) {
         for (int i = 0; i < size; i++) {
             if (authors[i].equals(author)) {
-                deleteByIndex(i);
+                ArrayUtil.deleteByIndex(authors,i,size);
+                size--;
                 break;
             }
         }
     }
 
-    private void deleteByIndex(int index) {
-        for (int i = index + 1; i < size; i++) {
-            authors[i - 1] = authors[i];
-
-        }
-        size--;
-    }
 }

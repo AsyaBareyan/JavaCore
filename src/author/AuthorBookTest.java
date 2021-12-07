@@ -121,7 +121,7 @@ public class AuthorBookTest implements AuthorBookCommands {
     }
 
     private static void printAuthorsList() {
-        System.out.println("Please choose author's email");
+        System.out.println("Please choose author's email separate , ");
         System.out.println("__________");
         authorStorage.print();
         System.out.println("__________");
@@ -137,12 +137,23 @@ public class AuthorBookTest implements AuthorBookCommands {
         Book book = bookStorage.getBySerialId(serialId);
         if (book != null) {
             printAuthorsList();
-            String email = scanner.nextLine();
-            Author author = authorStorage.getByEmail(email);
-            if (author != null) {
-                book.setAuthor(author);
-            } else {
-                System.err.println("author does not exists");
+            String emails = scanner.nextLine();
+            String[] emailArray=emails.split(",");
+            if (emailArray.length==0){
+                System.out.println("Please choose author's");
+                return;
+            }
+            Author[] authors=new Author[emailArray.length];
+            int index=0;
+            for (String email : emailArray) {
+                Author author = authorStorage.getByEmail(email);
+                if (author!=null){
+                    authors[index++]=author;
+                }else {
+                    System.err.println("Please input correct author's email");
+                    return;
+                }
+                book.setAuthors(authors);
             }
         } else {
             System.err.println("book with serialId does not exists");
@@ -206,10 +217,22 @@ public class AuthorBookTest implements AuthorBookCommands {
 
     private static void addBook() {
         printAuthorsList();
-        String email = scanner.nextLine();
-        Author author = authorStorage.getByEmail(email);
-
-        if (author != null) {
+        String emails = scanner.nextLine();
+        String[] emailArray = emails.split(",");
+        if (emailArray.length == 0) {
+            System.out.println("Please choose author's");
+            return;
+        }
+        Author[] authors = new Author[emailArray.length];
+        int index = 0;
+        for (String email : emailArray) {
+            Author author = authorStorage.getByEmail(email);
+            if (author != null) {
+                authors[index++] = author;
+            } else {
+                System.err.println("Please input correct author's email");
+                return;
+            }
             System.out.println("Please input book's serialId");
             String serialId = scanner.nextLine();
             if (bookStorage.getBySerialId(serialId) == null) {
@@ -221,18 +244,14 @@ public class AuthorBookTest implements AuthorBookCommands {
                 double price = Double.parseDouble(scanner.nextLine());
                 System.out.println("Please input book's count");
                 int count = Integer.parseInt(scanner.nextLine());
-                Book book = new Book(serialId, title, desc, price, count, author);
+                Book book = new Book(serialId, title, desc, price, count, authors);
                 bookStorage.add(book);
                 System.out.println("Thank you, book was added");
             } else {
                 System.err.println("Book with serialId " + serialId + " is exists");
             }
-        } else {
-            System.out.println("invalid email!Please try again");
-            addBook();
         }
     }
-
     private static void searchByAge() {
         System.out.println("Please input min age");
         int minAge = Integer.parseInt(scanner.nextLine());

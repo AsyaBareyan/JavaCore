@@ -19,7 +19,19 @@ public interface AuthorBookCommands {
     String ADD_TAG_TO_BOOK = "15";
     String REMOVE_TAGS_FROM_BOOK = "16";
 
-    static void printCommands() {
+    //user commands
+    String LOGOUT = "17";
+    String LOGIN = "1";
+    String REGISTER = "2";
+
+    static void printCommands(){
+        System.out.println("Please input " + EXIT + " for EXIT");
+        System.out.println("Please input " + LOGIN + " for LOGIN");
+        System.out.println("Please input " + REGISTER + " for REGISTER");
+
+    }
+
+    static void printAdminCommands() {
         System.out.println("Please input " + EXIT + " for EXIT");
         System.out.println("Please input " + ADD_AUTHOR + " for add homework.author");
         System.out.println("Please input " + ADD_BOOK + " for add book");
@@ -37,5 +49,20 @@ public interface AuthorBookCommands {
         System.out.println("Please input " + DELETE_BOOK + " for delete book");
         System.out.println("Please input " + ADD_TAG_TO_BOOK + " for add tag to book");
         System.out.println("Please input " + REMOVE_TAGS_FROM_BOOK + " for remove tags from book");
+        System.out.println("Please input " + LOGOUT + " for LOGOUT");
+    }
+
+    static void printUserCommands() {
+        System.out.println("Please input " + EXIT + " for EXIT");
+        System.out.println("Please input " + ADD_AUTHOR + " for add homework.author");
+        System.out.println("Please input " + ADD_BOOK + " for add book");
+        System.out.println("Please input " + SEARCH_AUTHORS + " for search homework.author by name");
+        System.out.println("Please input " + SEARCH_AUTHORS_BY_AGE + " for search homework.author by age");
+        System.out.println("Please input " + SEARCH_BOOKS_BY_TITLE + " for search book by title");
+        System.out.println("Please input " + PRINT_AUTHORS + " for print authors");
+        System.out.println("Please input " + PRINT_BOOKS + " for print books");
+        System.out.println("Please input " + SEARCH_BOOKS_BY_AUTHOR + " for print books by homework.author");
+        System.out.println("Please input " + COUNT_BOOKS_BY_AUTHOR + " for print count of books by homework.author");
+        System.out.println("Please input " + LOGOUT + " for LOGOUT");
     }
 }

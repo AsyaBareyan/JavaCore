@@ -1,6 +1,5 @@
-package homework.education.storage;
+package homework.author.storage;
 
-import homework.education.exception.UserNotFoundException;
 import homework.education.model.User;
 
 public class UserStorage {
@@ -25,14 +24,14 @@ public class UserStorage {
             System.out.println(users[i] + " ");
 
         }
-    }
 
-    public User getByEmail(String email) throws UserNotFoundException {
+    }
+    public User getByEmail(String email) {
         for (int i = 0; i < size; i++) {
             if (users[i].getEmail().equals(email)) {
                 return users[i];
             }
         }
-        throw new UserNotFoundException("User with this "+email+" was exists");
+        return null;
     }
 }

@@ -1,10 +1,14 @@
 package homework.author;
 
+import homework.author.exception.BookNotFoundException;
 import homework.author.model.Author;
 import homework.author.model.Book;
 import homework.author.storage.AuthorStorage;
 import homework.author.storage.BookStorage;
+import homework.author.storage.UserStorage;
 import homework.author.util.DateUtil;
+import homework.education.UserCommand;
+import homework.education.model.User;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -14,19 +18,41 @@ public class AuthorBookTest implements AuthorBookCommands {
     static Scanner scanner = new Scanner(System.in);
     static AuthorStorage authorStorage = new AuthorStorage();
     static BookStorage bookStorage = new BookStorage();
+    static UserStorage userStorage = new UserStorage();
 
 
     public static void main(String[] args) throws ParseException {
         initData();
-
         boolean isRun = true;
-
         while (isRun) {
             AuthorBookCommands.printCommands();
             String command = scanner.nextLine();
             switch (command) {
-                case EXIT:
+                case UserCommand.EXIT:
                     isRun = false;
+                    break;
+                case LOGIN:
+                    login();
+                    break;
+                case REGISTER:
+                    register();
+                    break;
+                default:
+                    System.out.println("invalid command");
+                    break;
+            }
+        }
+    }
+
+    private static void adminLogin() {
+        boolean isRun = true;
+
+        while (isRun) {
+            AuthorBookCommands.printAdminCommands();
+            String command = scanner.nextLine();
+            switch (command) {
+                case EXIT:
+                    System.exit(0);
                     break;
                 case ADD_AUTHOR:
                     addAuthor();
@@ -37,7 +63,6 @@ public class AuthorBookTest implements AuthorBookCommands {
                 case SEARCH_AUTHORS:
                     searchByName();
                     break;
-
                 case SEARCH_AUTHORS_BY_AGE:
                     searchByAge();
                     break;
@@ -78,11 +103,116 @@ public class AuthorBookTest implements AuthorBookCommands {
                 case REMOVE_TAGS_FROM_BOOK:
                     removeTagsToBook();
                     break;
+                case LOGOUT:
+                    isRun = false;
+                    break;
                 default:
                     System.out.println("invalid command!");
             }
+        }
+    }
+
+    private static void login() {
+        System.out.println("Please input email");
+        String email = scanner.nextLine();
+        User byEmail = userStorage.getByEmail(email);
+        if (byEmail != null) {
+            System.out.println("Please input password");
+            String password = scanner.nextLine();
+            if (byEmail.getPassword().equals(password)) {
+                if (byEmail.getType().equalsIgnoreCase("ADMIN")) {
+                    adminLogin();
+                } else if (byEmail.getType().equalsIgnoreCase("USER")) {
+                    userLogin();
+                }
+            } else {
+                System.err.println("password is wrong");
+            }
+        } else {
+            System.err.println("user with " + email + " does not exists");
+        }
+    }
+
+
+    private static void userLogin() {
+        boolean isRun = true;
+
+        while (isRun) {
+            AuthorBookCommands.printUserCommands();
+            String command = scanner.nextLine();
+            switch (command) {
+                case EXIT:
+                    System.exit(0);
+                    break;
+                case ADD_AUTHOR:
+                    addAuthor();
+                    break;
+                case ADD_BOOK:
+                    addBook();
+                    break;
+                case SEARCH_AUTHORS:
+                    searchByName();
+                    break;
+
+                case SEARCH_AUTHORS_BY_AGE:
+                    searchByAge();
+                    break;
+                case SEARCH_BOOKS_BY_TITLE:
+                    searchByTitle();
+                    break;
+                case PRINT_AUTHORS:
+                    authorStorage.print();
+                    break;
+
+                case PRINT_BOOKS:
+                    bookStorage.print();
+                    break;
+                case SEARCH_BOOKS_BY_AUTHOR:
+                    searchBooksByAuthor();
+                    break;
+                case COUNT_BOOKS_BY_AUTHOR:
+                    countBooksByAuthor();
+                    break;
+                case LOGOUT:
+                    isRun = false;
+                    break;
+                default:
+                    System.out.println("invalid command!");
+            }
+        }
+    }
+
+    private static void register() {
+        System.out.println("Please input email");
+        String email = scanner.nextLine();
+        User byEmail = userStorage.getByEmail(email);
+        if (byEmail == null) {
+            System.out.println("Please input name");
+            String name = scanner.nextLine();
+            System.out.println("Please input surname");
+            String surname = scanner.nextLine();
+
+            System.out.println("Please input password");
+            String password = scanner.nextLine();
+            System.out.println("Please input type(ADMIN,USER)");
+            String type = scanner.nextLine();
+            if (type.equalsIgnoreCase("ADMIN") || type.equalsIgnoreCase("USER")) {
+                User user = new User();
+                user.setEmail(email);
+                user.setName(name);
+                user.setSurname(surname);
+                user.setPassword(password);
+                user.setType(type);
+                userStorage.add(user);
+                System.out.println("user was registered");
+            } else {
+                System.err.println("invalid type");
+            }
+        } else {
+            System.err.println("user with " + email + " already exists");
 
         }
+
 
     }
 
@@ -92,8 +222,8 @@ public class AuthorBookTest implements AuthorBookCommands {
         bookStorage.print();
         System.out.println("__________");
         String serialId = scanner.nextLine();
-        Book book = bookStorage.getBySerialId(serialId);
-        if (book != null) {
+        try {
+            Book book = bookStorage.getBySerialId(serialId);
             System.out.println("Please input tags separate ,");
             String tagsStr = scanner.nextLine();
             String[] tagsToRemove = tagsStr.split(",");
@@ -132,7 +262,11 @@ public class AuthorBookTest implements AuthorBookCommands {
                 }
                 book.setTags(newTags);
             }
+        } catch (BookNotFoundException e) {
+            System.out.println(e.getMessage());
         }
+
+
     }
 
     private static void addTagToBook() {
@@ -141,8 +275,9 @@ public class AuthorBookTest implements AuthorBookCommands {
         bookStorage.print();
         System.out.println("__________");
         String serialId = scanner.nextLine();
-        Book book = bookStorage.getBySerialId(serialId);
-        if (book != null) {
+        Book book = null;
+        try {
+            book = bookStorage.getBySerialId(serialId);
             System.out.println("Please input tags separate ,");
             String tagsStr = scanner.nextLine();
             String[] tags = tagsStr.split(",");
@@ -166,19 +301,28 @@ public class AuthorBookTest implements AuthorBookCommands {
                 book.setTags(newTags);
                 System.out.println("Tags were added");
             }
+        } catch (BookNotFoundException e) {
+            System.out.println(e.getMessage());
         }
+
     }
 
-    private static void initData() throws ParseException {
-        Author author = new Author("poxos", "poxosyan", "poxos@mail.ru", 22, "male", DateUtil.stringToDate("11/01/1999"));
-        Author author1 = new Author("poxosuhi", "poxosyan", "poxosuhi@mail.ru", 23, "female", DateUtil.stringToDate("11/01/1998"));
-        Author author2 = new Author("petros", "petrosyan", "petros@mail.ru", 24, "male", DateUtil.stringToDate("11/01/1997"));
-        authorStorage.add(author);
-        authorStorage.add(author1);
-        authorStorage.add(author2);
-        Author[] authors = {author1, author2};
-        String[] tags = {"new", "popular", "detektiv", "lav girq"};
-        bookStorage.add(new Book("A5555", "girq1", "desc", 20, 2, authors, tags));
+    private static void initData() {
+        try {
+            Author author = new Author("poxos", "poxosyan", "poxos@mail.ru", 22, "male", DateUtil.stringToDate("11/01/1999"));
+            Author author1 = new Author("poxosuhi", "poxosyan", "poxosuhi@mail.ru", 23, "female", DateUtil.stringToDate("11/01/1998"));
+            Author author2 = new Author("petros", "petrosyan", "petros@mail.ru", 24, "male", DateUtil.stringToDate("11/01/1997"));
+            authorStorage.add(author);
+            authorStorage.add(author1);
+            authorStorage.add(author2);
+            Author[] authors = {author1, author2};
+            String[] tags = {"new", "popular", "detektiv", "lav girq"};
+            bookStorage.add(new Book("A5555", "girq1", "desc", 20, 2, authors, tags));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private static void deleteBook() {
@@ -187,13 +331,13 @@ public class AuthorBookTest implements AuthorBookCommands {
         bookStorage.print();
         System.out.println("__________");
         String serialId = scanner.nextLine();
-        Book book = bookStorage.getBySerialId(serialId);
-        if (book != null) {
+        Book book = null;
+        try {
+            book = bookStorage.getBySerialId(serialId);
             bookStorage.deleteBook(book);
-        } else {
-            System.err.println("book with serialId does not exists");
+        } catch (BookNotFoundException e) {
+            System.out.println(e.getMessage());
         }
-
     }
 
     private static void deleteByAuthor() {
@@ -232,8 +376,9 @@ public class AuthorBookTest implements AuthorBookCommands {
         bookStorage.print();
         System.out.println("__________");
         String serialId = scanner.nextLine();
-        Book book = bookStorage.getBySerialId(serialId);
-        if (book != null) {
+        Book book = null;
+        try {
+            book = bookStorage.getBySerialId(serialId);
             printAuthorsList();
             String emails = scanner.nextLine();
             String[] emailArray = emails.split(",");
@@ -253,9 +398,10 @@ public class AuthorBookTest implements AuthorBookCommands {
                 }
                 book.setAuthors(authors);
             }
-        } else {
-            System.err.println("book with serialId does not exists");
+        } catch (BookNotFoundException e) {
+            System.out.println(e.getMessage());
         }
+
     }
 
     private static void changeAuthor() {
@@ -333,7 +479,10 @@ public class AuthorBookTest implements AuthorBookCommands {
             }
             System.out.println("Please input book's serialId");
             String serialId = scanner.nextLine();
-            if (bookStorage.getBySerialId(serialId) == null) {
+            try {
+                bookStorage.getBySerialId(serialId);
+                System.err.println("book is duplicate");
+            } catch (BookNotFoundException e) {
                 System.out.println("Please input book's title");
                 String title = scanner.nextLine();
                 System.out.println("Please input book's description");
@@ -350,8 +499,6 @@ public class AuthorBookTest implements AuthorBookCommands {
                 Book book = new Book(serialId, title, desc, price, count, authors, tags);
                 bookStorage.add(book);
                 System.out.println("Thank you, book was added");
-            } else {
-                System.err.println("Book with serialId " + serialId + " is exists");
             }
         }
     }
@@ -371,13 +518,19 @@ public class AuthorBookTest implements AuthorBookCommands {
         authorStorage.searchByName(keyword);
     }
 
-    private static void addAuthor() throws ParseException {
+    private static void addAuthor() {
         System.out.println("Please input authors name,surname,email,age,gender,dateOfBirth[12/12/2021]");
         String authorDataStr = scanner.nextLine();
         String[] authorData = authorDataStr.split(",");
         if (authorData.length == 6) {
             int age = Integer.parseInt(authorData[3]);
-            Date date = DateUtil.stringToDate(authorData[5]);
+            Date date = null;
+            try {
+                date = DateUtil.stringToDate(authorData[5]);
+            } catch (ParseException e) {
+                System.out.println("invalid date format");
+                return;
+            }
             Author author = new Author(authorData[0], authorData[1], authorData[2], age, authorData[4], date);
 
             if (authorStorage.getByEmail(author.getEmail()) != null) {

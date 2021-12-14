@@ -14,7 +14,7 @@ public interface StudentLessonCommand {
     static void printCommand() {
         System.out.println("Please input  " + EXIT + " for exit");
         System.out.println("Please input  " + ADD_LESSON + " for add lesson");
-        System.out.println("Please input  " + ADD_STUDENT + " for add student");
+        System.out.println("Please input  " + ADD_STUDENT + " for add practice.student");
         System.out.println("Please input  " + PRINT_STUDENTS + " for print students");
         System.out.println("Please input  " + PRINT_STUDENTS_BY_LESSON + " for print students by lesson");
         System.out.println("Please input  " + PRINT_LESSONS + " for print lessons");
@@ -25,7 +25,7 @@ public interface StudentLessonCommand {
     static void printCommandForUser(){
         System.out.println("Please input  " + EXIT + " for exit");
         System.out.println("Please input  " + ADD_LESSON + " for add lesson");
-        System.out.println("Please input  " + ADD_STUDENT + " for add student");
+        System.out.println("Please input  " + ADD_STUDENT + " for add practice.student");
         System.out.println("Please input  " + PRINT_STUDENTS + " for print students");
         System.out.println("Please input  " + PRINT_STUDENTS_BY_LESSON + " for print students by lesson");
         System.out.println("Please input  " + PRINT_LESSONS + " for print lessons");

@@ -148,13 +148,13 @@ public class StudentLessonTest implements StudentLessonCommand {
 
 
     private static void deleteStudentByEmail() {
-        System.out.println("Please input student's email for delete");
+        System.out.println("Please input practice.student's email for delete");
         String email = scanner.nextLine();
         Student student = studentStorage.getByEmail(email);
         if (student != null) {
             studentStorage.deleteStudentByEmail(student);
         } else {
-            System.out.println("Don't found student whit this email");
+            System.out.println("Don't found practice.student whit this email");
         }
     }
 
@@ -214,25 +214,25 @@ public class StudentLessonTest implements StudentLessonCommand {
             }
         }
 
-        System.out.println("Please input student's email");
+        System.out.println("Please input practice.student's email");
         String email = scanner.nextLine();
         if (studentStorage.getByEmail(email) == null) {
-            System.out.println("Please input student's name");
+            System.out.println("Please input practice.student's name");
             String name = scanner.nextLine();
-            System.out.println("Please input student's surname");
+            System.out.println("Please input practice.student's surname");
             String surname = scanner.nextLine();
-            System.out.println("Please input student's age");
+            System.out.println("Please input practice.student's age");
             int age = Integer.parseInt(scanner.nextLine());
-            System.out.println("Please input student's phone");
+            System.out.println("Please input practice.student's phone");
             String phone = scanner.nextLine();
             System.out.println("Please input registered date[01/01/2021]");
             String dateStr = scanner.nextLine();
             Date date = DateUtil.stringToDate(dateStr);
             Student student = new Student(name, surname, age, email, phone, lessons, date);
             studentStorage.add(student);
-            System.out.println("thank you, student was added");
+            System.out.println("thank you, practice.student was added");
         } else {
-            System.err.println("student with this email: " + email + " was exists");
+            System.err.println("practice.student with this email: " + email + " was exists");
         }
     }
 

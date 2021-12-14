@@ -1,6 +1,6 @@
-package scan;
+package practice.scan;
 
-import calc.Calculator;
+import practice.calc.Calculator;
 
 import java.util.Scanner;
 

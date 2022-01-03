@@ -24,9 +24,12 @@ public class StudentLessonTest implements StudentLessonCommand {
         lessonStorage.add(new Lesson("javaScr", 2, "Poxos", 25000));
         lessonStorage.add(new Lesson("Pascal", 1, "Petros", 15000));
 
-        userStorage.add(new User("Martiros", "Martirosyan", "mart@gmail.com", "martirosyan", "user"));
-        userStorage.add(new User("Poxos", "Poxosyan", "poxosyan@gmail.com", "poxosyan", "user"));
-        userStorage.add(new User("Petros", "Petrosyan", "petrosyan@gmail.com", "petrosyan", "admin"));
+        User user = new User("Poxos", "Poxosyan", "poxosyan@gmail.com", "poxosyan", "user");
+        User user1 = new User("Petros", "Petrosyan", "petrosyan@gmail.com", "petrosyan", "admin");
+        User user2 = new User("Martiros", "Martirosyan", "mart@gmail.com", "martirosyan", "user");
+        userStorage.add("poxosyan@gmail.com", user);
+        userStorage.add("petrosyan@gmail.com", user1);
+        userStorage.add("mart@gmail.com", user2);
 
         boolean isRun = true;
         while (isRun) {
@@ -164,9 +167,11 @@ public class StudentLessonTest implements StudentLessonCommand {
         lessonStorage.print();
         System.out.println("__________");
         String lessonname = scanner.nextLine();
-        Lesson lesson = lessonStorage.getByName(lessonname);
-        if (lesson != null) {
-            lessonStorage.deleteByName(lesson);
+//        String lesson = lessonStorage.getByName(lessonname);
+        if (lessonStorage.getByName(lessonname) != null) {
+            lessonStorage.deleteByName(lessonname);
+        } else {
+            System.out.println("lesson doesn't exists");
         }
     }
 
@@ -276,7 +281,7 @@ public class StudentLessonTest implements StudentLessonCommand {
             if (type.equalsIgnoreCase("ADMIN") || type.equalsIgnoreCase("USER")) {
 
                 User user = new User(name, surname, email, password, type);
-                userStorage.add(user);
+                userStorage.add(email,user);
                 System.out.println("Thank you user was added");
 
             } else {

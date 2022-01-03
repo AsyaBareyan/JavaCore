@@ -3,65 +3,58 @@ package homework.education.storage;
 import homework.education.model.Lesson;
 import homework.education.model.Student;
 
+import java.util.LinkedList;
+
 public class StudentStorage {
-    private Student[] students = new Student[10];
-    private int size = 0;
+    //    private Student[] students = new Student[10];
+//    private int size = 0;
+    LinkedList<Student> studentLinkedList = new LinkedList<>();
 
     public void add(Student student) {
-        if (size == students.length) {
-            extend();
-        }
-        students[size++] = student;
-    }
-
-    private void extend() {
-        Student[] result = new Student[students.length + 10];
-        System.arraycopy(students, 0, result, 0, size);
-        students = result;
-
+        studentLinkedList.add(student);
     }
 
     public void print() {
-        for (int i = 0; i < size; i++) {
-            System.out.println(students[i] + " ");
-
+        for (Student student : studentLinkedList) {
+            System.out.println(student);
         }
+
     }
 
     public Student getByEmail(String email) {
-        for (int i = 0; i < size; i++) {
-            if (students[i].getEmail().equals(email)) {
-                return students[i];
+        for (Student student : studentLinkedList) {
+            if (student.getEmail().equals(email)) {
+                return student;
             }
         }
         return null;
     }
 
     public void printStudentsByLesson(Lesson lesson) {
-        for (int i = 0; i < size; i++) {
-            for (Lesson lesson1 : students[i].getLessons()) {
+        for (Student student : studentLinkedList) {
+            for (Lesson lesson1 : student.getLessons()) {
                 if (lesson.equals(lesson1)) {
-                    System.out.println(students[i]);
+                    System.out.println(student);
                 }
             }
         }
     }
 
     public void deleteStudentByEmail(Student student) {
-        for (int i = 0; i < size; i++) {
-            if (students[i].equals(student)) {
-                deleteByIndex(i);
+        for (Student student1 : studentLinkedList) {
+            if (student1.equals(student)) {
+                studentLinkedList.remove();
             }
 
         }
 
     }
 
-    private void deleteByIndex(int index) {
-        for (int i = index + 1; i < size; i++) {
-            students[i - 1] = students[i];
+//    private void deleteByIndex(int index) {
+//        for (int i = index + 1; i < size; i++) {
+//            students[i - 1] = students[i];
+//
+//        }
+//        size--;
 
-        }
-        size--;
-    }
 }

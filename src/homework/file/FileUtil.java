@@ -25,24 +25,29 @@ public class FileUtil {
 
     public static void printSizeOfPackage(String path) {
         File file = new File(path);
+        int sum = 0;
         if (file.exists() && file.isDirectory()) {
-            System.out.println(file.length() / 1024 / 1024 + "Mb");
+            for (File listFile : file.listFiles()) {
+                sum += listFile.length();
+
+            }
+            System.out.println(sum / 1024 / 1024 + "Mb");
         }
     }
 
-    public static void creatFileWithContent(String path, String fileName, String content) {
+    public static void createFileWithContent(String path, String fileName, String content) {
         File file = new File(path);
         if (file.exists() && file.isDirectory()) {
             File file1 = new File(path, fileName);
             if (!file1.exists()) {
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter(file1))) {
-                   file1.createNewFile();
-                    bw.write(content);
+                try {
+                    file1.createNewFile();
+                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(file1))) {
+                        bw.write(content);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             } else {
 
                 System.err.println("File does not exist or not directory");

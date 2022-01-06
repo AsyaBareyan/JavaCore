@@ -1,18 +1,20 @@
 package homework.education.storage;
 
-import homework.education.exception.UserNotFoundException;
+
 import homework.education.model.User;
+import homework.education.util.FileUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class UserStorage {
     //    private User[] users = new User[10];
-    private HashMap<String, User> userHashMap = new HashMap<>();
+    private Map<String, User> userMap = new HashMap<>();
 //    private int size = 0;
 
 
     public void add(String email, User user) {
-        userHashMap.put(email, user);
+        userMap.put(email, user);
     }
 
 //    private void extend() {
@@ -22,19 +24,26 @@ public class UserStorage {
 //    }
 
     public void print() {
-        for (String s : userHashMap.keySet()) {
+        for (String s : userMap.keySet()) {
             System.out.println(s);
         }
     }
 
-    public User getByEmail(String email) throws UserNotFoundException {
-        for (User value : userHashMap.values()) {
-            if (value.getEmail().equals(email)) {
-                return value;
-            }
-        }
-        throw new
+    public User getByEmail(String email) {
+        return userMap.get(email);
+//        for (User value : userHashMap.values()) {
+//            if (value.getEmail().equals(email)) {
+//                return value;
+//    }  throw new
+//
+//    UserNotFoundException("User with this "+email +" was exists");
+    }
 
-                UserNotFoundException("User with this " + email + " was exists");
+    public void initData() {
+        Map<String, User> userMapFromFile = FileUtil.deserializeUserMap();
+        if (userMapFromFile != null) {
+            userMap = userMapFromFile;
+        }
+
     }
 }

@@ -1,16 +1,18 @@
 package homework.education.storage;
 
+
 import homework.education.model.Lesson;
+import homework.education.util.FileUtil;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class LessonStorage {
-    //    public Lesson[] lessons = new Lesson[10];
-    public LinkedList<Lesson> lessons = new LinkedList<>();
-//    private int size = 0;
+    public List<Lesson> lessons = new LinkedList<>();
 
     public void add(Lesson lesson) {
         lessons.add(lesson);
+        serialize();
 //        if (size == lessons.length) {
 //            extend();
 //        }
@@ -48,18 +50,27 @@ public class LessonStorage {
     }
 
     public void deleteByName(String lessonName) {
-        for (Lesson lesson : lessons) {
-            if (lesson.getName().equals(lessonName)) {
-                lessons.remove(lesson);
+//        for (Lesson lesson : lessons) {
+//            if (lesson.getName().equals(lessonName)) {
+        lessons.remove(lessonName);
+        serialize();
+    }
 
-            }
+    public void initData() {
+        List<Lesson> lessonList = FileUtil.deserializeLessons();
+        if (lessonList != null) {
+            lessons = lessonList;
+        }
+    }
+
+    public void serialize() {
+        FileUtil.serializeLessons(lessons);
+    }
+}
 //        for (int i = 0; i < size; i++) {
 //            if (lessons[i].equals(lesson)) {
 //                deleteByIndex(i);
 //                break;
-        }
-
-    }
 
 
 //    private void deleteByIndex(int index) {
@@ -68,4 +79,4 @@ public class LessonStorage {
 //
 //        }
 //        size--;
-}
+

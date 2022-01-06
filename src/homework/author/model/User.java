@@ -1,26 +1,25 @@
 package homework.author.model;
 
-import java.util.Objects;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
 
-        private String name;
-        private String surname;
-        private String email;
-        private String password;
-        private String type;
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
+    private UserType type;
 
-        public User(){
+    public User(String name, String surname, String email, String password, UserType type) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+    }
 
-        }
-
-        public User(String name, String surname, String email, String password, String type) {
-            this.name = name;
-            this.surname = surname;
-            this.email = email;
-            this.password = password;
-            this.type = type;
-        }
+    public User() {
+    }
 
     public String getName() {
         return name;
@@ -54,11 +53,11 @@ public class User {
         this.password = password;
     }
 
-    public String getType() {
+    public UserType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(UserType type) {
         this.type = type;
     }
 
@@ -66,13 +65,24 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         User user = (User) o;
-        return Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(type, user.type);
+
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        return type != null ? type.equals(user.type) : user.type == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, email, password, type);
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
     }
 
     @Override

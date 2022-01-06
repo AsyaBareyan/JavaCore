@@ -1,27 +1,28 @@
 package homework.author.model;
 
-import java.util.Date;
-import java.util.Objects;
+import homework.author.util.DateUtil;
 
-public class Author {
+import java.io.Serializable;
+import java.util.Date;
+
+public class Author implements Serializable {
     private String name;
     private String surname;
-    private String email;
     private int age;
-    private String gender;
+    private String email;
+    private Gender gender;
     private Date dateOfBirth;
 
-    public Author() {
-
-    }
-
-    public Author(String name, String surname, String email, int age, String gender, Date dateOfBirth) {
+    public Author(String name, String surname, int age, String email, Gender gender, Date dateOfBirth) {
         this.name = name;
         this.surname = surname;
-        this.email = email;
         this.age = age;
+        this.email = email;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Author() {
     }
 
     public String getName() {
@@ -32,28 +33,12 @@ public class Author {
         this.name = name;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getSurname() {
         return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public int getAge() {
@@ -64,25 +49,54 @@ public class Author {
         this.age = age;
     }
 
-    public String getGender() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Author author = (Author) o;
-        return age == author.age && Objects.equals(name, author.name) && Objects.equals(surname, author.surname) && Objects.equals(email, author.email) && Objects.equals(gender, author.gender) && Objects.equals(dateOfBirth, author.dateOfBirth);
+
+        if (age != author.age) return false;
+        if (name != null ? !name.equals(author.name) : author.name != null) return false;
+        if (surname != null ? !surname.equals(author.surname) : author.surname != null) return false;
+        if (email != null ? !email.equals(author.email) : author.email != null) return false;
+        if (gender != null ? !gender.equals(author.gender) : author.gender != null) return false;
+        return dateOfBirth != null ? dateOfBirth.equals(author.dateOfBirth) : author.dateOfBirth == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, email, age, gender, dateOfBirth);
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + age;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -90,10 +104,10 @@ public class Author {
         return "Author{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
                 ", age=" + age +
+                ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
+                ", dateOfBirth=" + DateUtil.dateToString(dateOfBirth) +
                 '}';
     }
 }

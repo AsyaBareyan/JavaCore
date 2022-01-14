@@ -14,32 +14,27 @@ public class MultiThreadRead {
         long count = Files.lines(Paths.get(path)).count();
         String keyword = ";";
         System.out.println("all lines:" + count);
-        long currentTime = System.currentTimeMillis();
+
         List<String> strings = Files.readAllLines(Paths.get(path));
         List<String> subList = strings.subList(0, 862158);
         List<String> subList1 = strings.subList(862158, 1724316);
-        List<String> subList2 = strings.subList(1724316, 2586474);
+        List<String> subList2 = strings.subList(1724316, 2586474);  //ok?bravo merci shat xndrem
         List<String> subList3 = strings.subList(2586474, 3448632);
-        for (String string : strings) {
-            if (string.contains(keyword)) {
-                countOfKeyword.incrementAndGet();
-            }
-        }
-        System.out.println("found lines :" + countOfKeyword);
 
-
+        long currentTime = System.currentTimeMillis();
         MyThread thread = new MyThread(subList, keyword);
         MyThread thread1 = new MyThread(subList1, keyword);
         MyThread thread2 = new MyThread(subList2, keyword);
         MyThread thread3 = new MyThread(subList3, keyword);
         try {
             thread.t.join();
-           thread1.t.join();
-           thread2.t.join();
-           thread3.t.join();
+            thread1.t.join();
+            thread2.t.join();
+            thread3.t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("found lines :" + countOfKeyword);
         long finishTime = System.currentTimeMillis();
         System.out.println("time: " + (finishTime - currentTime));
     }

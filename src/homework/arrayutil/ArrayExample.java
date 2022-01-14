@@ -56,11 +56,11 @@ public class ArrayExample {
 //        }
 
         int[] array = {1, 55, -8, 66, 7, 92, 14, 11, 1, 6, 1};
-        for (int i = array.length-1; i > array.length/2 ; i--) {
-            for (int j = array[0]; j < array.length/2; j++) {
-                int tmp=array[j];
-                array[j-1]=array[j];
-                array[j]=tmp;
+        for (int i = array.length - 1; i > array.length / 2; i--) {
+            for (int j = array[0]; j < array.length / 2; j++) {
+                int tmp = array[j];
+                array[j - 1] = array[j];
+                array[j] = tmp;
 
             }
 
@@ -70,4 +70,5 @@ public class ArrayExample {
 
         }
 
-    }}
+    }
+}
